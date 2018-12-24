@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <%= t.include("partials/_head.html", grunt.data.json) %>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+
+    <pym-particle src="./guest.html"></pym-particle>
+
+    <div data-pym src="https://apps.npr.org/dailygraphics/graphics/tabletest-20181026/"></div>
+
+    <script src="app.js" async></script>
+    <%= t.include("partials/_analytics.html") %>
+  </body>
+</html>

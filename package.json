@@ -1,0 +1,49 @@
+{
+  "name": "pym-particle",
+  "description": "",
+  "version": "0.0.1",
+  "author": "Thomas Wilburn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nprapps/pym-particle.git"
+  },
+  "dependencies": {
+    "archieml": "^0.4.2",
+    "async": "^2.0.0-rc.1",
+    "aws-sdk": "^2.2.45",
+    "babel-preset-env": "^1.6.0",
+    "babelify": "^7.3.0",
+    "browser-pack-flat": "^3.0.5",
+    "browserify": "^13.0.0",
+    "chalk": "^1.0.0",
+    "commonmark": "^0.24.0",
+    "csv": "^0.4.2",
+    "dot": "^1.1.2",
+    "exorcist": "^0.4.0",
+    "google-spreadsheets": "^2.0.0",
+    "googleapis": "^35.0.0",
+    "grunt": "^1.0.0",
+    "grunt-contrib-connect": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "less": "^2.6.1",
+    "mime": "^1.2.11",
+    "opn": "^5.4.0",
+    "resolve": "^1.1.7",
+    "shelljs": "^0.6.0",
+    "through2": "^2.0.0",
+    "typogr": "^0.6.4"
+  },
+  "browser": {
+    "share": "./src/js/lib/share.min.js",
+    "angular": "angular/angular.min",
+    "jquery": "jquery/dist/jquery.min",
+    "leaflet": "leaflet/dist/leaflet.js",
+    "three": "three/three.min"
+  },
+  "browserify": {
+    "transform": [
+      "./tasks/lib/browserify-less",
+      "./tasks/lib/browserify-text"
+    ]
+  }
+}

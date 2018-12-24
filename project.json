@@ -1,0 +1,27 @@
+{
+  "s3": {
+    "stage": {
+      "bucket": "stage-apps.npr.org",
+      "path": "pym-particle"
+    },
+    "live": {
+      "bucket": "apps.npr.org",
+      "path": "pym-particle"
+    }
+  },
+  "styles": {
+    "src/css/seed.less": "build/style.css"
+  },
+  "scripts": {
+    "src/js/main.js": "build/app.js",
+    "src/js/sub.js": "build/sub.js"
+  },
+  "title": "",
+  "description": "",
+  "url": "",
+  "image": "assets/logo.png",
+  "sheets": [],
+  "docs": [],
+  "embedded": true,
+  "production": false
+}
