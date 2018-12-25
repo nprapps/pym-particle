@@ -15,13 +15,13 @@ Pym Particle is a responsive iframe solution that's compatible with Pym v1 for b
 
 If you're using this in a browser that supports custom elements, you should be able to create a host frame by simply adding the correct element to your page:
 
-..code-block:: html
+.. code-block:: html
 
     <pym-particle src="https://your-embed-here"></pym-particle>
 
 In older browsers, you can use the shim method to initialize any element with a "data-pym" and "src" attributes:
 
-..code-block:: html
+.. code-block:: html
 
     <div data-pym src="https://your-embed-here"></div>
 
