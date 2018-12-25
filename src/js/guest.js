@@ -1,14 +1,20 @@
 import { encodeLegacy } from "./encoding";
 
 export default class GuestParticle {
-  constructor() {
+  constructor(options = {}) {
     var here = new URL(window.location);
-    this.id = here.searchParams.get("childId");
+    this.id = options.id || here.searchParams.get("childId");
+    this.options = options;
 
+    this.lastHeight = 0;
     this.listeners = {};
 
     window.addEventListener("resize", () => this.sendHeight());
     window.addEventListener("message", e => this.onMessage(e));
+
+    if (!options.disablePolling) {
+      setInterval(() => this.sendHeight(), options.polling || 300);
+    }
 
     this.sendHeight();
   }
@@ -31,6 +37,8 @@ export default class GuestParticle {
 
   sendHeight() {
     var height = document.documentElement.offsetHeight;
+    if (this.lastHeight == height) return;
+    this.lastHeight = height;
     var pymFormatted = encodeLegacy(this.id, "height", height);
     // for convenience, we just use the same format as AMP
     var ampFormatted = {
