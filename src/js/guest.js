@@ -19,7 +19,7 @@ export default class GuestParticle {
     this.sendHeight();
   }
 
-  send(message) {
+  sendMessage(message) {
     window.parent.postMessage(message, "*");
   }
 
@@ -46,7 +46,7 @@ export default class GuestParticle {
       type: "embed-size",
       height
     };
-    this.send(pymFormatted);
-    this.send(ampFormatted);
+    this.sendMessage(pymFormatted);
+    this.sendMessage(ampFormatted);
   }
 }

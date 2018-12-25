@@ -11,6 +11,7 @@ Pym Particle is a responsive iframe solution that's compatible with Pym v1 for b
 * Based on Custom Elements v1
 * Uses shadow DOM to isolate the iframe from parent page styling
 * Smaller API surface area
+* AMP-compatible on both sides
 
 If you're using this in a browser that supports custom elements, you should be able to create a host frame by simply adding the correct element to your page::
 
@@ -25,7 +26,7 @@ In older browsers, you can use the shim method to initialize any element with a 
       document.querySelectorAll(`[data-pym]`).forEach(el => PymParticle.shim(el));
     </script>
 
-On the other side, embedded pages should call ``PymParticle.registerGuest()`` to start sending height events to the parent. ``registerGuest()`` returns a GuestParticle instance, which supports Pym v1 ``on()`` event listeners for legacy events. However, we recommend that guest pages using Pym Particle use ``window.parent.postMessage()`` to send messages instead, as it's simpler and supports more complex data formats.
+On the other side, embedded pages should call ``PymParticle.registerGuest()`` to start sending height events to the parent. ``registerGuest()`` returns a GuestParticle instance, which supports Pym v1 ``on()`` event listeners for legacy events. However, we recommend that guest and host pages using Pym Particle use ``sendMessage()`` (a convenience wrapper around ``window.postMessage()``) to transmit, and register their own message handlers on the window for the receiving end.
 
 Trying it out
 -------------
@@ -56,3 +57,4 @@ Open questions
 * What additional functions should be made available in the loader library? Do people generally use the navigate or scroll functions?
 * How do people typically use these libraries? Should we offer an unpackaged version via CDN, or embrace NPM?
 * This library should address confusion around initializing Pym, problems with page margin, and automatically monitoring page height. Are there other Pym v1 weaknesses or edge cases we can address here?
+* Should the guest and host communicate using legacy Pym message formats by default? Is it more important on the guest or the host? Or should both only use the old message formats if manually enabled? Does it really matter? Performance probably isn't an issue, honestly. 
