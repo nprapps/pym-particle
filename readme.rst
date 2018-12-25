@@ -48,3 +48,11 @@ How do I navigate the parent page?
 
 Does Pym Particle provide arbitrary messaging support?
   No. Sending messages using ``window.postMessage()`` between guest and host pages is simple enough that it does not make sense to provide additional layers of abstraction. We will, however, make available a loader library that demonstrates some useful functionality, such as firing visibility events and passing data between frames.
+
+Open questions
+--------------
+
+* Does it make sense to offer the ``shim()`` method that supports elements other than ``<pym-particle>``? Although it's not a lot of code on its own, it does complicate the connectedCallback and some other code paths.
+* What additional functions should be made available in the loader library? Do people generally use the navigate or scroll functions?
+* How do people typically use these libraries? Should we offer an unpackaged version via CDN, or embrace NPM?
+* This library should address confusion around initializing Pym, problems with page margin, and automatically monitoring page height. Are there other Pym v1 weaknesses or edge cases we can address here?
