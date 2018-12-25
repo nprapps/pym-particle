@@ -27,6 +27,13 @@ In older browsers, you can use the shim method to initialize any element with a 
 
 On the other side, embedded pages should call ``PymParticle.registerGuest()`` to start sending height events to the parent. ``registerGuest()`` returns a GuestParticle instance, which supports Pym v1 ``on()`` event listeners for legacy events. However, we recommend that guest pages using Pym Particle use ``window.parent.postMessage()`` to send messages instead, as it's simpler and supports more complex data formats.
 
+Trying it out
+-------------
+
+This repo is just for demo purposes--at some point, we'll end up refactoring into a more traditional library structure. However, the current demo provides a useful environment for running a demo page and is based on our `interactive template <https://github.com/nprapps/interactive-template>`_.
+
+To try out the code and make some tests of your own, clone this repo, ``npm install`` to get dependencies, and then run ``grunt`` to start the build process. If you do not have Grunt installed, run ``npm i grunt-cli -g`` to get the command-line shim first. Finally, visit ``localhost:8000`` in your browser to view the test page. 
+
 Frequently Asked Questions
 --------------------------
 
