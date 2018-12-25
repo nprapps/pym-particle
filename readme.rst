@@ -5,7 +5,7 @@ Pym Particle
 
 **Important note: this repo is not production-ready, and should not be used on live pages!**
 
-Pym Particle is a responsive iframe solution that's compatible with Pym v1 for basic height management, but with a simpler core built around newer JavaScript standards::
+Pym Particle is a responsive iframe solution that's compatible with Pym v1 for basic height management, but with a simpler core built around newer JavaScript standards:
 
 * Uses transferable JSON for messages, instead of a proprietary string
 * Based on Custom Elements v1
@@ -13,11 +13,15 @@ Pym Particle is a responsive iframe solution that's compatible with Pym v1 for b
 * Smaller API surface area
 * AMP-compatible on both sides
 
-If you're using this in a browser that supports custom elements, you should be able to create a host frame by simply adding the correct element to your page::
+If you're using this in a browser that supports custom elements, you should be able to create a host frame by simply adding the correct element to your page:
+
+..code-block:: html
 
     <pym-particle src="https://your-embed-here"></pym-particle>
 
-In older browsers, you can use the shim method to initialize any element with a "data-pym" and "src" attributes::
+In older browsers, you can use the shim method to initialize any element with a "data-pym" and "src" attributes:
+
+..code-block:: html
 
     <div data-pym src="https://your-embed-here"></div>
 
