@@ -6,12 +6,9 @@ class PymParticle extends HTMLElement {
     super();
 
     element = element || this;
-
-    element.style.display = "block";
-
-    var shadow = element.attachShadow({ mode: "open" });
+    // used when calling as a non-custom element
+    this.ref = element;
     var iframe = this.iframe = document.createElement("iframe");
-    shadow.appendChild(iframe);
     iframe.style.width = "100%";
     iframe.style.border = "none";
     iframe.setAttribute("seamless", "true");
@@ -20,6 +17,12 @@ class PymParticle extends HTMLElement {
   }
 
   connectedCallback() {
+    if (!this.iframe.parentElement) {
+      var element = this.ref;
+      element.style.display = "block";
+      var root = element.attachShadow ? element.attachShadow({ mode: "open" }) : element;
+      root.appendChild(this.iframe);
+    }
     window.addEventListener("message", this.onMessage);
   }
 
@@ -55,10 +58,11 @@ class PymParticle extends HTMLElement {
     this.iframe.contentWindow.postMessage(message, "*");
   }
 
-  static asGuest(options) {
+  static registerGuest(options) {
     return new GuestParticle(options);
   }
 
+  // use this to upgrade elements in browsers that don't support Custom Elements
   static shim(element) {
     var host = new PymParticle(element);
     host.connectedCallback();
