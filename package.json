@@ -8,6 +8,8 @@
     "url": "https://github.com/nprapps/pym-particle.git"
   },
   "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
     "@webcomponents/custom-elements": "^1.2.1",
     "archieml": "^0.4.2",
     "async": "^2.0.0-rc.1",
@@ -30,6 +32,10 @@
     "mime": "^1.2.11",
     "opn": "^5.4.0",
     "resolve": "^1.1.7",
+    "rollup": "^0.68.2",
+    "rollup-plugin-babel": "^4.1.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0",
     "typogr": "^0.6.4"

@@ -9,7 +9,14 @@ module.exports = function(grunt) {
   var exorcist = require("exorcist");
   var fs = require("fs");
 
-  grunt.registerTask("bundle", "Build app.js using browserify", function(mode) {
+  var rollup = require("rollup").rollup;
+  var rollupNodeResolve = require("rollup-plugin-node-resolve");
+  var rollupCommonJS = require("rollup-plugin-commonjs");
+  var rollupBabel = require("rollup-plugin-babel");
+
+  // var babel = require("@babel/core");
+
+  grunt.registerTask("bundle", "Build app.js using browserify", async function(mode) {
     //run in dev mode unless otherwise specified
     mode = mode || "dev";
     var done = this.async();
@@ -18,44 +25,30 @@ module.exports = function(grunt) {
     var config = grunt.file.readJSON("project.json");
     var seeds = config.scripts;
 
-    async.forEachOf(seeds, function(dest, src, c) {
-      var b = browserify({ debug: mode == "dev" });
-      b.plugin(require("browser-pack-flat/plugin"));
-      b.transform(babel, { global: true, presets: [
-        ["env", {
-          targets: { browsers: ["safari >= 10"]},
-          loose: true
-        }]
-      ]});
-
-      //make sure build/ exists
-      grunt.file.mkdir("build");
-      var output = fs.createWriteStream(dest);
-
-      b.add(src);
-      var assembly = b.bundle();
-
-      assembly.on("error", function(err) {
-        grunt.log.errorlns(err.message);
-        done();
+    for (var input in seeds) {
+      var result = await rollup({
+        input,
+        plugins: [
+          rollupNodeResolve(),
+          rollupCommonJS(),
+          rollupBabel({
+            presets: [
+              ["@babel/preset-env", {
+                targets: { browsers: ["edge 14", "safari >= 10"] },
+                loose: true
+              }]
+            ]
+          })
+        ]
       });
-      var mapFile = dest + ".map"
-
-      if (mode == "dev") {
-        //output sourcemap
-        assembly = assembly.pipe(exorcist(mapFile, null, null, "."));
-      }
-      assembly.pipe(output).on("finish", function() {
-        if (mode != "dev") return;
-
-        //correct path separators in the sourcemap for Windows
-        var sourcemap = grunt.file.readJSON(mapFile);
-        sourcemap.sources = sourcemap.sources.map(function(s) { return s.replace(/\\/g, "/") });
-        grunt.file.write(mapFile, JSON.stringify(sourcemap, null, 2));
-
-        c();
+      await result.write({
+        file: seeds[input],
+        format: "iife",
+        sourcemap: true
       });
-    }, done);
+    }
+
+    done();
 
   });
 

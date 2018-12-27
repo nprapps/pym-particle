@@ -1,4 +1,4 @@
-import PymParticle from "./particle";
+import PymParticle from "./particle/index";
 
 var guest = PymParticle.registerGuest();
 guest.sendHeight();
