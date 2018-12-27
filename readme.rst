@@ -35,7 +35,7 @@ Is this a replacement for the existing Pym?
   **No, not at this time.** This project is a thought experiment on what Pym would look like if we wrote it today, keeping the core small and leveraging the features built-in to modern browsers. It is also a way to open a conversation with community members about what they want and need from an updated version of Pym.
 
 Does this work in all browsers?
-  No, this is intended only for modern browsers--those that support the Custom Elements v1 spec (and optionally, Shadow DOM). That means Chrome, Firefox, and Safari >= 10.1. Edge has problems with subclassing HTMLElement, which makes shimming this behavior probably more trouble than it's worth.
+  No, this is intended only for modern browsers--those that support the Custom Elements v1 spec (and optionally, Shadow DOM). That means Chrome, Firefox, and Safari >= 10.1. Edge works just fine if you load the `Custom Elements polyfill <https://github.com/webcomponents/custom-elements>`_ first, although this adds about 20KB to the unminified bundle size, so you may want to feature-test or use their dynamic loader.
 
 How do I scroll to an element in Pym Particle?
   Instead of offering a ``scrollParentToChildPos()``, requiring you to compute the offset of the element, use the browser's native ``Element.scrollIntoView()`` method (`documentation on MDN <https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView>`_).
