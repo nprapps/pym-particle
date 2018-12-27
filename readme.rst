@@ -19,17 +19,6 @@ If you're using this in a browser that supports custom elements, you should be a
 
     <pym-particle src="https://your-embed-here"></pym-particle>
 
-In older browsers, you can use the shim method to initialize any element with a "data-pym" and "src" attributes:
-
-.. code-block:: html
-
-    <div data-pym src="https://your-embed-here"></div>
-
-    <script>
-      // assuming you've loaded the script
-      document.querySelectorAll(`[data-pym]`).forEach(el => PymParticle.shim(el));
-    </script>
-
 On the other side, embedded pages should call ``PymParticle.registerGuest()`` to start sending height events to the parent. ``registerGuest()`` returns a GuestParticle instance, which supports Pym v1 ``on()`` event listeners for legacy events. However, we recommend that guest and host pages using Pym Particle use ``sendMessage()`` (a convenience wrapper around ``window.postMessage()``) to transmit, and register their own message handlers on the window for the receiving end.
 
 Trying it out
@@ -45,6 +34,9 @@ Frequently Asked Questions
 Is this a replacement for the existing Pym?
   **No, not at this time.** This project is a thought experiment on what Pym would look like if we wrote it today, keeping the core small and leveraging the features built-in to modern browsers. It is also a way to open a conversation with community members about what they want and need from an updated version of Pym.
 
+Does this work in all browsers?
+  No, this is intended only for modern browsers--those that support the Custom Elements v1 spec (and optionally, Shadow DOM). That means Chrome, Firefox, and Safari >= 10.1. Edge has problems with subclassing HTMLElement, which makes shimming this behavior probably more trouble than it's worth.
+
 How do I scroll to an element in Pym Particle?
   Instead of offering a ``scrollParentToChildPos()``, requiring you to compute the offset of the element, use the browser's native ``Element.scrollIntoView()`` method (`documentation on MDN <https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView>`_).
 
@@ -57,7 +49,6 @@ Does Pym Particle provide arbitrary messaging support?
 Open questions
 --------------
 
-* Does it make sense to offer the ``shim()`` method that supports elements other than ``<pym-particle>``? Although it's not a lot of code on its own, it does complicate the connectedCallback and some other code paths.
 * What additional functions should be made available in the loader library? Do people generally use the navigate or scroll functions?
 * How do people typically use these libraries? Should we offer an unpackaged version via CDN, or embrace NPM?
 * This library should address confusion around initializing Pym, problems with page margin, and automatically monitoring page height. Are there other Pym v1 weaknesses or edge cases we can address here?

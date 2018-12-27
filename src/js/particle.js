@@ -2,12 +2,9 @@ import { encode, decode } from "./encoding";
 import GuestParticle from "./guest";
 
 class PymParticle extends HTMLElement {
-  constructor(element) {
+  constructor() {
     super();
 
-    element = element || this;
-    // used when calling as a non-custom element
-    this.ref = element;
     var iframe = this.iframe = document.createElement("iframe");
     iframe.style.width = "100%";
     iframe.style.border = "none";
@@ -18,9 +15,8 @@ class PymParticle extends HTMLElement {
 
   connectedCallback() {
     if (!this.iframe.parentElement) {
-      var element = this.ref;
-      element.style.display = "block";
-      var root = element.attachShadow ? element.attachShadow({ mode: "open" }) : element;
+      this.style.display = "block";
+      var root = this.attachShadow ? this.attachShadow({ mode: "open" }) : this;
       root.appendChild(this.iframe);
     }
     window.addEventListener("message", this.onMessage);
@@ -60,28 +56,6 @@ class PymParticle extends HTMLElement {
 
   static registerGuest(options) {
     return new GuestParticle(options);
-  }
-
-  // use this to upgrade elements in browsers that don't support Custom Elements
-  static shim(element) {
-    var host = new PymParticle(element);
-    host.connectedCallback();
-    host.watcher = new MutationObserver(function(list) {
-      for (var mutation of list) {
-        if (mutation.type == "attributes") {
-          var was = mutation.oldValue;
-          var is = mutation.target.getAttribute(mutation.attributeName);
-          host.attributeChangedCallback(mutation.attributeName, was, is);
-        }
-      }
-    });
-    host.watcher.observe(element, {
-      attributes: true
-    });
-    for (var attr of element.attributes) {
-      host.attributeChangedCallback(attr.name, null, attr.value);
-    }
-    return host;
   }
 
 }
