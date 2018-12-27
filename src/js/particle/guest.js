@@ -23,6 +23,11 @@ export default class GuestParticle {
     window.parent.postMessage(message, "*");
   }
 
+  sendLegacy(param, value) {
+    var pymFormatted = encodeLegacy(this.id, param, value);
+    window.parent.postMessage(pymFormatted, "*");
+  }
+
   on(event, callback) {
     if (!this.listeners[event]) this.listeners[event] = [];
     this.listeners[event].push(callback);

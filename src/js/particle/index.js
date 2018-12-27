@@ -1,4 +1,4 @@
-import { encode, decode } from "./encoding";
+import { encodeLegacy, decode } from "./encoding";
 import GuestParticle from "./guest";
 
 class PymParticle extends HTMLElement {
@@ -52,6 +52,11 @@ class PymParticle extends HTMLElement {
 
   sendMessage(message) {
     this.iframe.contentWindow.postMessage(message, "*");
+  }
+
+  sendLegacy(param, value) {
+    var pymFormatted = encodeLegacy(this.id, param, value);
+    this.iframe.contentWindow.postMessage(pymFormatted, "*");
   }
 
   static registerGuest(options) {

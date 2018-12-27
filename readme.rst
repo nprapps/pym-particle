@@ -44,7 +44,52 @@ How do I navigate the parent page?
   If possible, for accessibility reasons, page navigations should be exposed as links. Use the ``target="_parent"`` attribute to ask the parent page to navigate. If you need to navigate programmatically, you may need to write a custom message handler for it--Pym Particle does not make assumptions about how your single-page app handles routing.
 
 Does Pym Particle provide arbitrary messaging support?
-  No. Sending messages using ``window.postMessage()`` between guest and host pages is simple enough that it does not make sense to provide additional layers of abstraction. We will, however, make available a loader library that demonstrates some useful functionality, such as firing visibility events and passing data between frames.
+  Not really. Sending messages using ``window.postMessage()`` between guest and host pages is simple enough that it does not make sense to provide additional layers of abstraction. Guest/host instances do provide a ``sendMessage()`` method just for convenience (it's easier than having to search for and access each iframe's ``contentWindow``), but that's it. We will, however, make available a loader library that demonstrates some useful functionality, such as firing visibility events and passing data between frames.
+
+Code snippets
+-------------
+
+.. code-block:: javascript
+
+    // sending a message to an individual child
+    // the sentinel serves as a way to test on the other side
+    var particle = document.querySelector("pym-particle.individual");
+    particle.sendMessage({
+      sentinel: "npr",
+      type: "log",
+      message: "Hello from NPR"
+    });
+
+    // receiving a message in the child
+    window.addEventListener("message", function(e) {
+      if (e.data.sentinel && e.data.sentinel == "npr") {
+        switch (e.data.type) {
+          case "log":
+            console.log(e.data.message); // Hello from NPR
+            break;
+
+          default:
+            console.warn(`Pym message with unknown type (${e.data.type}) received`);
+        }
+      }
+    });
+
+    // sending a message back up to the parent from a child
+    var guest = PymParticle.registerGuest();
+    guest.sendMessage({
+      sentinel: "npr",
+      type: "broadcast",
+      value: "Hello from the guest!"
+    });
+
+    // re-broadcasting to all instances from the host page
+    window.addEventListener("message", function(e) {
+      // only proceed on our specific messages
+      if (!e.data.sentinel || e.sentinel.data != "npr") return;
+      // broadcast the message back to all guest pages
+      var hosts = document.querySelectorAll("pym-particle");
+      hosts.forEach(host => host.sendMessage(e.data));
+    });
 
 Open questions
 --------------
