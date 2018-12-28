@@ -98,3 +98,4 @@ Open questions
 * How do people typically use these libraries? Should we offer an unpackaged version via CDN, or embrace NPM?
 * This library should address confusion around initializing Pym, problems with page margin, and automatically monitoring page height. Are there other Pym v1 weaknesses or edge cases we can address here?
 * Should the guest and host communicate using legacy Pym message formats by default? Is it more important on the guest or the host? Or should both only use the old message formats if manually enabled? Does it really matter? Performance probably isn't an issue, honestly. 
+* Can we change the name? In retrospect, calling it "Pym" after the most well-known domestic abuser in comics is not a great look, especially in 2019. New names could reference the grow/shrink capabilities or the embedding/serving part.
