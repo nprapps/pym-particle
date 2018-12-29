@@ -1,9 +1,6 @@
 Pym Particle
 ============
 
-*Modern Pym for modern browsers*
-
-**Important note: this repo is not production-ready, and should not be used on live pages!**
 
 Pym Particle is a responsive iframe solution that's compatible with Pym v1 for basic height management, but with a simpler core built around newer JavaScript standards:
 
